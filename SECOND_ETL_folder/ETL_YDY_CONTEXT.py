@@ -22,7 +22,7 @@ if sys_path_list.count(os.path.abspath(os.path.dirname(os.path.abspath(os.path.d
 
 print(sys.path)
 
-from Applications.ETC.Logger import Logger
+from ML_Framework_Applications.ETC.Logger import Logger
 
 class ETL_YDY_CONTEXT:
     def __init__(self, Local_Clickhouse_Id, Local_Clickhouse_password, Local_Clickhouse_Ip,
@@ -36,7 +36,7 @@ class ETL_YDY_CONTEXT:
         self.connect_db()
 
         self.base_dir = os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))
-        self.encoder_dir = self.base_dir +'/Applications/encoder_folder'
+        self.encoder_dir = self.base_dir +'/ML_Framework_Applications/encoder_folder'
         self.refined_data_dir = self.base_dir +'/Static_files/Refined_data_folder'
 
         # Add logger here
@@ -417,9 +417,6 @@ class ETL_YDY_CONTEXT:
 
 
 if __name__ == "__main__":
-    # def __init__(self, maria_id, maria_password,
-    #              Local_Clickhouse_Id, Local_Clickhouse_password, Local_Clickhouse_Ip,
-    #              DB_NAME, TABLE_NAME):
 
     # test용 property data
     logger_name = "test"
@@ -436,7 +433,23 @@ if __name__ == "__main__":
     test_context = ETL_YDY_CONTEXT(local_clickhouse_id, local_clickhouse_password,
                                                 local_clickhouse_ip, local_clickhouse_DB_name,
                                                 local_clickhouse_Table_name)
-    final_return = test_context.preprocess_sample_data('2020100101')
+
+    Excute_Logger_Context = Logger("Terminal Execute Context")
+
+    refined_data_folder_name = input("refined data folder name : ")
+    start_dttm = input("extract start dttm is (ex) 20200801 ) : ")
+    from_hh = input("start hour is (ex) 00 hour : 00 ) : ")
+    last_dttm = input("extract last dttm is (ex) 20200827 ) : ")
+    dt_list = pd.date_range(start=start_dttm, end=last_dttm).strftime("%Y%m%d").tolist()
+
+    for stats_dttm in dt_list:
+        stats_dttm_list = [stats_dttm + '0{0}'.format(i) if i < 10 else stats_dttm + str(i) for i in
+                           range(int(from_hh), 24)]
+        for Extract_Dttm in stats_dttm_list:
+            Excute_Logger_Context.log("stats_dttm_hh : ", Extract_Dttm)
+            final_return = test_context.preprocess_sample_data(Extract_Dttm,folder_name=refined_data_folder_name)
+            Excute_Logger_Context.log("final_return : ", final_return)
+
     # log_data = test_context.Extract_Sample_Log()
     # print(log_data)
     # print(os.getcwd()+'/Refined_data_folder')

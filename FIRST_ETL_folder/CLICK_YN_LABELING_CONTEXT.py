@@ -11,11 +11,9 @@ import datetime
 from datetime import timedelta
 import time
 
-from ETL_context_folder.Logger import Logger
+from ML_Framework_Applications.ETC.Logger import Logger
 from clickhouse_driver import Client
 import argparse
-
-
 
 class CLICK_YN_LABELING_CONTEXT :
 
@@ -31,7 +29,7 @@ class CLICK_YN_LABELING_CONTEXT :
         self.local_clickhouse_id = local_clickhouse_id
         self.local_clickhouse_password = local_clickhouse_password
         self.local_clickhouse_db_name = local_clickhouse_db_name
-        self.logger = Logger(logger_name, logger_file)
+        self.logger = Logger(logger_name)
 
         self.Click_House_Engine = None
         self.Click_House_Conn = None
