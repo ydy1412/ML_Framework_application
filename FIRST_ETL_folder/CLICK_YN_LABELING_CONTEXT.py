@@ -10,10 +10,6 @@ import pandas as pd
 import datetime
 from datetime import timedelta
 import time
-
-from ML_Framework_Applications.ETC.Logger import Logger
-from clickhouse_driver import Client
-import argparse
 import sys
 import os
 
@@ -25,6 +21,9 @@ if sys_path_list.count(os.path.abspath(os.path.dirname(os.path.abspath(os.path.d
 
 print(sys.path)
 
+from ML_Framework_Applications.ETC.Logger import Logger
+from clickhouse_driver import Client
+import argparse
 
 class CLICK_YN_LABELING_CONTEXT :
 
