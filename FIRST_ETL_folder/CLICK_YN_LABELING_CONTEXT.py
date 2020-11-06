@@ -14,6 +14,17 @@ import time
 from ML_Framework_Applications.ETC.Logger import Logger
 from clickhouse_driver import Client
 import argparse
+import sys
+import os
+
+sys_path_list = sys.path
+print(sys_path_list)
+# ML_Train_Framework directory의 절대 경로를 환경 변수에 추가.
+if sys_path_list.count(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))) == 0 :
+    sys.path.append(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))))))
+
+print(sys.path)
+
 
 class CLICK_YN_LABELING_CONTEXT :
 
